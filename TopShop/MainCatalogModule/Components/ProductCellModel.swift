@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct ProductCellModel {
+    var image: String
+    var title: String
+    var price: String
+}

@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum URLsString {
+    static let baseURL: String = "https://s3-eu-west-1.amazonaws.com/developer-application-test/cart/"
+    static let productList: String = "list"
+    static let detailProductInfoURL: String = "/detail"
+}

@@ -1,5 +1,5 @@
 //
-//  Requester.swift
+//  RequestManager.swift
 //  TopShop
 //
 //  Created by Nikita Moskalenko on 1/19/21.
@@ -9,26 +9,64 @@ import Foundation
 
 // MARK: - RequesterProtocol
 
-protocol RequesterProtocol {
-    func createRequestWithURL(_ urlString: String, completion: @escaping (Data?, Error?) -> Void)
+protocol RequestManagerProtocol {
+    
 }
 
 // MARK: - Requester
 
-struct Requester: RequesterProtocol {
+final class RequestManager: RequestManagerProtocol {
     
-    private func createDataTask(url request: URLRequest, completion: @escaping (Data?, Error?) -> Void) -> URLSessionDataTask {
-        let session = URLSession.shared.dataTask(with: request) { (data, _, error) in
-            completion(data, error)
-        }
-        return session
+    static func getProductsList(onSuccess: @escaping (ListProductsModel?) -> Void) {
+        let session = URLSession.shared
+        guard let fullURL = URL(string: URLsString.baseURL + URLsString.productList) else { return }
+        let requestURL = URLRequest(url: fullURL)
+        
+        let task = session.dataTask(with: requestURL, completionHandler: { data, _, error in
+            DispatchQueue.main.async {
+                if error != nil {
+                    print(error?.localizedDescription)
+                    return
+                }
+                
+                guard let data = data else { return }
+                
+                do {
+                    let json = try JSONDecoder().decode(ListProductsModel.self, from: data)
+                    onSuccess(json)
+                } catch {
+                    print("Error during JSON serialization: \(error.localizedDescription)")
+                }
+            }
+        })
+        task.resume()
     }
     
-    func createRequestWithURL(_ urlString: String, completion: @escaping (Data?, Error?) -> Void) {
-        guard let url = URL(string: urlString) else { return }
-        let request = URLRequest(url: url)
-        let dataTesk = createDataTask(url: request, completion: completion)
-        dataTesk.resume()
+    static func getDetailInfoProductWithID(_ id: String, onSuccess: @escaping (ProductsDetailModel?) -> Void) {
+        let session = URLSession.shared
+        
+        guard let fullURL = URL(string: URLsString.baseURL + id + URLsString.detailProductInfoURL) else { return }
+        
+        let requestURL = URLRequest(url: fullURL)
+        
+        let task = session.dataTask(with: requestURL, completionHandler: { data, _, error in
+            DispatchQueue.main.async {
+                if error != nil {
+                    print(error?.localizedDescription)
+                    return
+                }
+                
+                guard let data = data else { return }
+                
+                do {
+                    let json = try JSONDecoder().decode(ProductsDetailModel.self, from: data)
+                    onSuccess(json)
+                } catch {
+                    print("Error during JSON serialization 2: \(error.localizedDescription)")
+                }
+            }
+        })
+        task.resume()
     }
     
 }

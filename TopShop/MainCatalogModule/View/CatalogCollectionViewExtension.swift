@@ -5,4 +5,38 @@
 //  Created by Nikita Moskalenko on 1/19/21.
 //
 
-import Foundation
+import UIKit
+
+extension CatalogCollectionView {
+    
+    func makeCatalogCollectionView() -> UICollectionView {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        layout.scrollDirection = .vertical
+        cv.delegate = self
+        cv.dataSource = self
+        cv.frame = self.view.bounds
+        cv.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.SelfIdentifire())
+        cv.backgroundColor = .clear
+        view.addSubview(cv)
+        return cv
+    }
+    
+    func makeActivityIndicator() -> UIActivityIndicatorView {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.color = .gray
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicator)
+        activityIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        return activityIndicator
+    }
+    
+    func navigatioSetup() {
+        navigationItem.title = "Products list"
+        navigationItem.largeTitleDisplayMode = .always
+    }
+    
+}

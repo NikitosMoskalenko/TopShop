@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct DetailControllerModel {
+    var imageNamed: String?
+    var titleLabelText: String?
+    var priceLabelText: String?
+    var descriptionLabelText: String?
+}
