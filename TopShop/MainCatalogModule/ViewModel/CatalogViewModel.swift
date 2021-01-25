@@ -26,7 +26,7 @@ final class CatalogViewModel: CatalogViewModelProtocol {
     
     func startingLoadingData(activityIndicatorCondition: @escaping (ActivityIndicatorActionStatus) -> ()) {
         activityIndicatorCondition(.start)
-        RequestManager().shared.getProductsList { [weak self] (productList) in
+        RequestManager.shared.getProductsList { [weak self] (productList) in
             guard let self = self else { return }
             guard productList != nil else {
                 activityIndicatorCondition(.stop)

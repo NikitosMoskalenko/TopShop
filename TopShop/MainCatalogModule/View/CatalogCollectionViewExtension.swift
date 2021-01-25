@@ -18,8 +18,13 @@ extension CatalogCollectionView {
         cv.dataSource = self
         cv.frame = self.view.bounds
         cv.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.SelfIdentifire())
+        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.backgroundColor = .clear
         view.addSubview(cv)
+        cv.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
+        cv.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
+        cv.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
+        cv.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
         return cv
     }
     

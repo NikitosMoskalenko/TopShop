@@ -17,7 +17,7 @@ protocol RequestManagerProtocol {
 
 final class RequestManager: RequestManagerProtocol {
     
-    let shared = RequestManager()
+    static let shared = RequestManager()
     
     public func getProductsList(onSuccess: @escaping (ListProductsModel?) -> Void) {
         let session = URLSession.shared
