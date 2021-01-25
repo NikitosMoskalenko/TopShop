@@ -36,7 +36,8 @@ final class DetailViewController: UIViewController {
     private func updateData() {
         activitySetup(status: .start)
         guard detailViewModel?.productID != nil, detailViewModel?.productID?.count != 0 else { return }
-        detailViewModel?.getData(id: (detailViewModel?.productID)!, onSuccess: { (viewData) in
+        detailViewModel?.getData(id: (detailViewModel?.productID)!, onSuccess: { [weak self] (viewData) in
+            guard let self = self else { return }
             guard let price = viewData?.price else { return }
             self.productImageView.image = self.loadIcons(urlString: viewData?.image ?? " ")
             self.titleLabel.text = viewData?.name

@@ -25,7 +25,7 @@ final class DetailViewModel: DetailViewModelProtocol {
     
     func getData(id: String, onSuccess: @escaping (ProductsDetailModel?) -> Void) {
         guard productID != nil, productID?.count != 0 else { return }
-        RequestManager.getDetailInfoProductWithID(id, onSuccess: onSuccess)
+        RequestManager().shared.getDetailInfoProductWithID(id, onSuccess: onSuccess)
     }
     
     func setData() -> DetailControllerModel {

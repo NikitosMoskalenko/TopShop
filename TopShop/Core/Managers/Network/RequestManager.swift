@@ -17,7 +17,9 @@ protocol RequestManagerProtocol {
 
 final class RequestManager: RequestManagerProtocol {
     
-    static func getProductsList(onSuccess: @escaping (ListProductsModel?) -> Void) {
+    let shared = RequestManager()
+    
+    public func getProductsList(onSuccess: @escaping (ListProductsModel?) -> Void) {
         let session = URLSession.shared
         guard let fullURL = URL(string: URLsString.baseURL + URLsString.productList) else { return }
         let requestURL = URLRequest(url: fullURL)
@@ -42,7 +44,7 @@ final class RequestManager: RequestManagerProtocol {
         task.resume()
     }
     
-    static func getDetailInfoProductWithID(_ id: String, onSuccess: @escaping (ProductsDetailModel?) -> Void) {
+    public func getDetailInfoProductWithID(_ id: String, onSuccess: @escaping (ProductsDetailModel?) -> Void) {
         let session = URLSession.shared
         
         guard let fullURL = URL(string: URLsString.baseURL + id + URLsString.detailProductInfoURL) else { return }
