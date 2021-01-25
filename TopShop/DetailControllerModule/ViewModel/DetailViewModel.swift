@@ -30,9 +30,9 @@ final class DetailViewModel: DetailViewModelProtocol {
     
     func setData() -> DetailControllerModel {
         let data = DetailControllerModel(imageNamed: productInfo?.image,
-                                         titleLabelText: productInfo?.name,
-                                         priceLabelText: "\(productInfo?.price)",
-                                         descriptionLabelText: productInfo?.description)
+                                         title: productInfo?.name,
+                                         price: "\(productInfo?.price)",
+                                         description: productInfo?.description)
         return data
     }
     

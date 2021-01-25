@@ -11,10 +11,10 @@ import Foundation
 
 protocol CatalogViewModelProtocol {
     var productsList: ListProductsModel? { get set }
-    func startLoadingData(activityCondition: @escaping (ActivityIndicatorActionStatus) -> ())
+    func startingLoadingData(activityIndicatorCondition: @escaping (ActivityIndicatorActionStatus) -> ())
     func getCellsCount() -> Int
     func setDataToCell(_ cell: ProductCell, indexPath: IndexPath)
-    func makeDetailController(indexPath: IndexPath) -> DetailViewController
+    func makeDetailInfoController(indexPath: IndexPath) -> DetailViewController
 }
 
 // MARK: - CatalogViewModel
@@ -24,17 +24,17 @@ final class CatalogViewModel: CatalogViewModelProtocol {
     
     var productsList: ListProductsModel?
     
-    func startLoadingData(activityCondition: @escaping (ActivityIndicatorActionStatus) -> ()) {
-        activityCondition(.start)
+    func startingLoadingData(activityIndicatorCondition: @escaping (ActivityIndicatorActionStatus) -> ()) {
+        activityIndicatorCondition(.start)
         RequestManager().shared.getProductsList { [weak self] (productList) in
             guard let self = self else { return }
             guard productList != nil else {
-                activityCondition(.stop)
+                activityIndicatorCondition(.stop)
                 // TODO: show error alert
                 return
             }
             self.productsList = productList!
-            activityCondition(.stop)
+            activityIndicatorCondition(.stop)
         }
     }
     
@@ -51,7 +51,7 @@ final class CatalogViewModel: CatalogViewModelProtocol {
         cell.data = productCellData
     }
     
-    func makeDetailController(indexPath: IndexPath) -> DetailViewController {
+    func makeDetailInfoController(indexPath: IndexPath) -> DetailViewController {
         let detailVC = Builder.makeDetailView()
         guard let productID = productsList?.products[indexPath.row].productID else { return DetailViewController() }
         detailVC.detailViewModel?.productID = productID

@@ -30,7 +30,7 @@ final class CatalogCollectionView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        catalogVM?.startLoadingData(activityCondition: activitySetup(status:))
+        catalogVM?.startingLoadingData(activityIndicatorCondition: activitySetup(status:))
         navigatioSetup()
     }
     
@@ -48,8 +48,8 @@ final class CatalogCollectionView: UIViewController {
         }
     }
     
-    private func segeuToDetail(indexPath: IndexPath) {
-        guard let detailVC = catalogVM?.makeDetailController(indexPath: indexPath) else { return }
+    private func segueToDetail(indexPath: IndexPath) {
+        guard let detailVC = catalogVM?.makeDetailInfoController(indexPath: indexPath) else { return }
         navigationController?.pushViewController(detailVC, animated: false)
     }
 }
@@ -78,7 +78,7 @@ extension CatalogCollectionView: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        segeuToDetail(indexPath: indexPath)
+        segueToDetail(indexPath: indexPath)
     }
     
 }
